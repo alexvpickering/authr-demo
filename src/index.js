@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { injectGlobal, ThemeProvider } from 'styled-components';
+import { injectGlobal, ThemeProvider } from 'styled-components'
 import theme from './utils/theme'
-
-import Register from './routes/Register/Register.js'
+import { Provider } from 'react-redux'
+import store from './redux/store.js'
+import RegisterContainer from './routes/Register/RegisterContainer.js'
 
 
 // Global style
@@ -23,9 +24,11 @@ body {
 
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <Register/>
-  </ThemeProvider>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <RegisterContainer/>
+    </ThemeProvider>
+  </Provider>,
 
   document.getElementById('root')
 )

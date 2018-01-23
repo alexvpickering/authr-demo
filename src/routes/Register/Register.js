@@ -8,8 +8,6 @@ import Space4 from '../../shared/Space4.js'
 import Space3 from '../../shared/Space3.js'
 import SmallPrint from '../../shared/SmallPrint.js'
 
-const loginEndpoint = 'http://localhost:8005/api/authr/login_user'
-
 
 class Register extends React.Component {
   constructor(props) {
@@ -31,7 +29,12 @@ class Register extends React.Component {
 
   onSubmit(e) {
     e.preventDefault()
-    console.log(this.state)
+
+    this.props.userSignupRequest({
+      email: this.state.email,
+      password: this.state.password
+    })
+
   }
 
   render() {
@@ -83,5 +86,10 @@ class Register extends React.Component {
     )
   }
 }
+
+// Register.propTypes = {
+//   userSignupRequest: React.PropTypes.func.isRequired
+// }
+
 
 export default Register
