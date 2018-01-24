@@ -1,15 +1,16 @@
 import React from 'react'
 import Container from '../../shared/Container'
 import PageHeader from '../../shared/PageHeader.js'
-import Input from '../../shared/Input.js'
+import Input from '../../shared/InputGroup/Input'
 import Button from '../../shared/Button.js'
 import HR from '../../shared/HR.js'
 import Space4 from '../../shared/Space4.js'
 import Space3 from '../../shared/Space3.js'
 import SmallPrint from '../../shared/SmallPrint.js'
 import { Link } from 'react-router-dom'
-import FormError from '../../shared/FormError.js'
-import FormLabel from '../../shared/FormLabel.js'
+import FormError from '../../shared/InputGroup/InputError'
+import FormLabel from '../../shared/InputGroup/InputLabel'
+import InputGroup from '../../shared/InputGroup/InputGroup.js'
 
 class Register extends React.Component {
   constructor(props) {
@@ -23,23 +24,25 @@ class Register extends React.Component {
       confirmError: ''
     }
 
-    this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
   onChange(e) {
-    // computed property names
     this.setState({ [e.target.name]: e.target.value })
   }
+
 
   onSubmit(e) {
     e.preventDefault()
 
     this.setState({
-      emailError: 'This field is required.'
+      emailError: 'This field is required.',
+      passwordError: 'Test error.'
     })
 
-    console.log(this.state.emailError)
+    console.log(this.state)
+    // console.log(this.state.emailError)
     // this.props.userSignupRequest({
     //   email: this.state.email,
     //   password: this.state.password
@@ -60,34 +63,30 @@ class Register extends React.Component {
           <Space4>
             <Space3>
               <form onSubmit={this.onSubmit}>
-                <FormLabel error={this.state.emailError}>Email:
-                  <Input
-                    type="email"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                    error={this.state.emailError}
-                  />
-                  <FormError error={this.state.emailError}>
-                    {this.state.emailError}
-                  </FormError>
-                </FormLabel>
-                <FormLabel error={this.state.passwordError}>Password:
-                  <Input
-                    type="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />
-                </FormLabel>
-                <FormLabel error={this.state.confirmError}>Confirm password:
-                  <Input
-                    type="password"
-                    name="confirm"
-                    value={this.state.confirm}
-                    onChange={this.onChange}
-                  />
-                </FormLabel>
+                <InputGroup
+                  type='email'
+                  label='Email'
+                  name='email'
+                  value={this.state.email}
+                  error={this.state.emailError}
+                  onChange={this.onChange}
+                />
+                <InputGroup
+                  type='password'
+                  label='Password'
+                  name='password'
+                  value={this.state.password}
+                  error={this.state.passwordError}
+                  onChange={this.onChange}
+                />
+                <InputGroup
+                  type='password'
+                  label='Confirm password'
+                  name='confirm'
+                  value={this.state.confirm}
+                  error={this.state.confirmError}
+                  onChange={this.onChange}
+                />
                 <Button>Sign up</Button>
               </form>
             </Space3>
