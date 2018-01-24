@@ -7,7 +7,9 @@ import HR from '../../shared/HR.js'
 import Space4 from '../../shared/Space4.js'
 import Space3 from '../../shared/Space3.js'
 import SmallPrint from '../../shared/SmallPrint.js'
-
+import { Link } from 'react-router-dom'
+import FormError from '../../shared/FormError.js'
+import FormLabel from '../../shared/FormLabel.js'
 
 class Register extends React.Component {
   constructor(props) {
@@ -15,11 +17,14 @@ class Register extends React.Component {
     this.state = {
       email: '',
       password: '',
-      confirm: ''
+      confirm: '',
+      emailError: '',
+      passwordError: '',
+      confirmError: ''
     }
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   onChange(e) {
@@ -30,10 +35,15 @@ class Register extends React.Component {
   onSubmit(e) {
     e.preventDefault()
 
-    this.props.userSignupRequest({
-      email: this.state.email,
-      password: this.state.password
+    this.setState({
+      emailError: 'This field is required.'
     })
+
+    console.log(this.state.emailError)
+    // this.props.userSignupRequest({
+    //   email: this.state.email,
+    //   password: this.state.password
+    // })
 
   }
 
@@ -43,42 +53,46 @@ class Register extends React.Component {
         <PageHeader>
           <Container>
             <h1>Join R Widgets</h1>
-            <p>This is an example signup form for authr.</p>
+            <p>This is an example signup form for <a href="https://github.com/alexvpickering/authr">authr</a>.</p>
           </Container>
         </PageHeader>
         <Container>
           <Space4>
             <Space3>
               <form onSubmit={this.onSubmit}>
-                <label>Email:
+                <FormLabel error={this.state.emailError}>Email:
                   <Input
                     type="email"
                     name="email"
                     value={this.state.email}
                     onChange={this.onChange}
+                    error={this.state.emailError}
                   />
-                </label>
-                <label>Password:
+                  <FormError error={this.state.emailError}>
+                    {this.state.emailError}
+                  </FormError>
+                </FormLabel>
+                <FormLabel error={this.state.passwordError}>Password:
                   <Input
                     type="password"
                     name="password"
                     value={this.state.password}
                     onChange={this.onChange}
                   />
-                </label>
-                <label>Confirm password:
+                </FormLabel>
+                <FormLabel error={this.state.confirmError}>Confirm password:
                   <Input
                     type="password"
                     name="confirm"
                     value={this.state.confirm}
                     onChange={this.onChange}
                   />
-                </label>
+                </FormLabel>
                 <Button>Sign up</Button>
               </form>
             </Space3>
             <HR/>
-            <SmallPrint>Already a member? <a href="/login">Login</a></SmallPrint>
+            <SmallPrint>Already a member? <Link to="/login">Login</Link></SmallPrint>
           </Space4>
         </Container>
       </div>

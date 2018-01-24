@@ -8,8 +8,9 @@ const theme = {
     gray_d: "#384049",
     gray_l: "#ddd",
     white: "#fff",
-    red_d: darken(0.05, "#f95659"),
-    red_l: "#f95659"
+    primary_l: "#1b3f51",
+    primary_d: darken(0.04, "#1b3f51"),
+    warn: "#f95659"
   }
 }
 

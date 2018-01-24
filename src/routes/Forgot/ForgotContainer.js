@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Register from './Register'
+import Register from './Forgot'
 import { fetchRegister, REGISTER_ENDPOINT } from '../../redux/actions/register'
 
 // function to transform redux store to props to pass to presentational components

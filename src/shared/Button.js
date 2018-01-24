@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 
 const Button = styled.button`
-  background-color: ${props => props.theme.color.red_l};
+  background-color: ${props => props.theme.color.primary_l};
   color: ${props => props.theme.color.white};
   cursor: pointer;
   font-family: inherit;
@@ -13,7 +13,7 @@ const Button = styled.button`
   border-radius: 4px;
   font-size: 16px;
   &:hover {
-    background-color: ${props => props.theme.color.red_d};
+    background-color: ${props => props.theme.color.primary_d};
   }
 `
 
