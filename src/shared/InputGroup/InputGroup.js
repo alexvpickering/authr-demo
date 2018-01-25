@@ -3,7 +3,7 @@ import Input from './Input.js'
 import InputLabel from './InputLabel.js'
 import InputError from './InputError.js'
 
-const InputGroup = ({ type, label, name, value, error, onChange }) => {
+const InputGroup = ({ type, label, name, value, error, onChange, onBlur }) => {
     return(
       <InputLabel error={error}>
         {`${label}:`}
@@ -13,6 +13,7 @@ const InputGroup = ({ type, label, name, value, error, onChange }) => {
           value={value}
           error={error}
           onChange={onChange}
+          onBlur={onBlur}
         />
         <InputError error={error}>
           {error}

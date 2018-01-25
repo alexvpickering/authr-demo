@@ -1,16 +1,14 @@
 import React from 'react'
 import Container from '../../shared/Container'
 import PageHeader from '../../shared/PageHeader.js'
-import Input from '../../shared/InputGroup/Input'
 import Button from '../../shared/Button.js'
 import HR from '../../shared/HR.js'
 import Space4 from '../../shared/Space4.js'
 import Space3 from '../../shared/Space3.js'
 import SmallPrint from '../../shared/SmallPrint.js'
 import { Link } from 'react-router-dom'
-import FormError from '../../shared/InputGroup/InputError'
-import FormLabel from '../../shared/InputGroup/InputLabel'
 import InputGroup from '../../shared/InputGroup/InputGroup.js'
+import validateEmail from '../../utils/validateEmail.js'
 
 class Register extends React.Component {
   constructor(props) {
@@ -24,29 +22,51 @@ class Register extends React.Component {
       confirmError: ''
     }
 
-    this.onSubmit = this.onSubmit.bind(this)
-    this.onChange = this.onChange.bind(this)
   }
 
-  onChange(e) {
+  onChange = e => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  // validate email
+  validateEmail = () => {
+    if (!validateEmail(this.state.email)) {
+      this.setState({emailError: 'Invalid email.'})
+    } else {
+      this.setState({emailError: ''})
+    }
+  }
 
-  onSubmit(e) {
+  // validate password
+  validatePassword = () => {
+    if (this.state.password.length <= 6) {
+      this.setState({passwordError: 'Password must be at least 6 characters long.'})
+    } else {
+      this.setState({passwordError: ''})
+    }
+  }
+
+  // validate confirm password
+  validateConfirm = () => {
+    if (this.state.password != this.state.confirm) {
+      this.setState({confirmError: "Password doesn't match."})
+    } else if (!this.state.confirm) {
+      this.setState({confirmError: "Please confirm password."})
+    } else {
+      this.setState({confirmError: ''})
+    }
+  }
+
+  onSubmit = e => {
     e.preventDefault()
 
-    this.setState({
-      emailError: 'This field is required.',
-      passwordError: 'Test error.'
-    })
+    // recheck inputs
+    this.validateEmail()
+    this.validatePassword()
+    this.validateConfirm()
 
-    console.log(this.state)
-    // console.log(this.state.emailError)
-    // this.props.userSignupRequest({
-    //   email: this.state.email,
-    //   password: this.state.password
-    // })
+    if (!this.state.emailError || !this.state.passwordError || !this.state.confirmError)
+        console.log(this.state)
 
   }
 
@@ -64,12 +84,13 @@ class Register extends React.Component {
             <Space3>
               <form onSubmit={this.onSubmit}>
                 <InputGroup
-                  type='email'
+                  type='text'
                   label='Email'
                   name='email'
                   value={this.state.email}
                   error={this.state.emailError}
                   onChange={this.onChange}
+                  onBlur={this.validateEmail}
                 />
                 <InputGroup
                   type='password'
@@ -78,6 +99,7 @@ class Register extends React.Component {
                   value={this.state.password}
                   error={this.state.passwordError}
                   onChange={this.onChange}
+                  onBlur={this.validatePassword}
                 />
                 <InputGroup
                   type='password'
@@ -86,6 +108,7 @@ class Register extends React.Component {
                   value={this.state.confirm}
                   error={this.state.confirmError}
                   onChange={this.onChange}
+                  onBlur={this.validateConfirm}
                 />
                 <Button>Sign up</Button>
               </form>
