@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom'
 import { injectGlobal, ThemeProvider } from 'styled-components'
 import theme from './utils/theme'
 import { Provider } from 'react-redux'
-import store from './redux/store.js'
-import RegisterContainer from './routes/Register/RegisterContainer.js'
+import Register from './routes/Register/Register.js'
 import Login from './routes/Login/Login.js'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Forgot from './routes/Forgot/Forgot.js'
+import { createStore, applyMiddleware } from 'redux'
+import thunkMiddleware from 'redux-thunk'
 
 // Global style
 // eslint-disable-next-line
@@ -21,8 +22,12 @@ body {
     color: inherit;
   }
 }
-
 `
+
+const store = createStore(
+  (state = {}) => state,
+  applyMiddleware(thunkMiddleware)
+)
 
 
 ReactDOM.render(
@@ -30,7 +35,7 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <Router basename={process.env.PUBLIC_URL}>
         <Switch>
-          <Route exact path="/register" component={RegisterContainer}/>
+          <Route exact path="/register" component={Register}/>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/forgot_password" component={Forgot}/>
         </Switch>

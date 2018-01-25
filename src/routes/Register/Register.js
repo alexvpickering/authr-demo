@@ -9,6 +9,8 @@ import SmallPrint from '../../shared/SmallPrint.js'
 import { Link } from 'react-router-dom'
 import InputGroup from '../../shared/InputGroup/InputGroup.js'
 import validateEmail from '../../utils/validateEmail.js'
+import { connect } from 'react-redux'
+import { userRegisterRequest } from '../../redux/actions/registerActions.js'
 
 class Register extends React.Component {
   constructor(props) {
@@ -66,7 +68,12 @@ class Register extends React.Component {
     this.validateConfirm()
 
     if (!this.state.emailError || !this.state.passwordError || !this.state.confirmError)
-        console.log(this.state)
+        this.props.userRegisterRequest({
+          email: this.state.email,
+          password: this.state.password
+        }).catch(
+          error => this.setState({emailError: error.response.data})
+        )
 
   }
 
@@ -123,9 +130,5 @@ class Register extends React.Component {
   }
 }
 
-// Register.propTypes = {
-//   userSignupRequest: React.PropTypes.func.isRequired
-// }
 
-
-export default Register
+export default connect(state => { return {} }, { userRegisterRequest })(Register)
