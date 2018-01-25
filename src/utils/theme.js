@@ -10,7 +10,8 @@ const theme = {
     white: "#fff",
     primary_l: "#1b3f51",
     primary_d: darken(0.04, "#1b3f51"),
-    warn: "#f95659"
+    warn: "#f95659",
+    success: "#508b28"
   }
 }
 

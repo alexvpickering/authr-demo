@@ -1,9 +1,9 @@
 import React from 'react'
 import Input from './Input.js'
 import InputLabel from './InputLabel.js'
-import InputError from './InputError.js'
+import InputMessage from './InputMessage'
 
-const InputGroup = ({ type, label, name, value, error, onChange, onBlur }) => {
+const InputGroup = ({ type, label, name, value, error, success, onChange, onBlur }) => {
     return(
       <InputLabel error={error}>
         {`${label}:`}
@@ -15,9 +15,9 @@ const InputGroup = ({ type, label, name, value, error, onChange, onBlur }) => {
           onChange={onChange}
           onBlur={onBlur}
         />
-        <InputError error={error}>
-          {error}
-        </InputError>
+        <InputMessage error={error} success={success}>
+          {error}{success}
+        </InputMessage>
       </InputLabel>
     )
 }
