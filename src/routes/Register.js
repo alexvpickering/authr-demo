@@ -11,6 +11,7 @@ import InputGroup from '../shared/InputGroup/InputGroup.js'
 import validateEmail from '../utils/validateEmail.js'
 import { connect } from 'react-redux'
 import { authrRequest, REGISTER_ENDPOINT } from '../redux/actions/authrActions'
+import { withRouter } from 'react-router-dom'
 
 class Register extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class Register extends React.Component {
 
   // validate confirm password
   validateConfirm = () => {
-    if (this.state.password != this.state.confirm) {
+    if (this.state.password !== this.state.confirm) {
       this.setState({confirmError: "Password doesn't match."})
     } else if (!this.state.confirm) {
       this.setState({confirmError: "Please confirm password."})
@@ -72,9 +73,12 @@ class Register extends React.Component {
       REGISTER_ENDPOINT, {
         email: this.state.email,
         password: this.state.password
-      }).catch(
-        error => this.setState({emailError: error.response.data})
-      )
+      })
+      .then(response => {
+        localStorage.setItem('authr_jwt', response.data)
+        this.props.history.push('/')
+      })
+      .catch(error => this.setState({emailError: error.response.data}))
 
     }
 
@@ -132,4 +136,4 @@ class Register extends React.Component {
   }
 
 
-  export default connect(state => { return {} }, { authrRequest })(Register)
+  export default connect(state => { return {} }, { authrRequest })(withRouter(Register))

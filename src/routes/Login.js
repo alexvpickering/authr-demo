@@ -11,6 +11,7 @@ import InputGroup from '../shared/InputGroup/InputGroup.js'
 import validateEmail from '../utils/validateEmail.js'
 import { connect } from 'react-redux'
 import { authrRequest, LOGIN_ENDPOINT } from '../redux/actions/authrActions'
+import { withRouter } from 'react-router-dom'
 
 class Login extends React.Component {
   constructor(props) {
@@ -47,8 +48,12 @@ class Login extends React.Component {
     this.props.authrRequest(
       LOGIN_ENDPOINT,
       { email: this.state.email, password: this.state.password })
-      .catch(
-        error => this.setState({emailError: ' ', passwordError: error.response.data}))
+      .then(response => {
+        localStorage.setItem('authr_jwt', response.data)
+        this.props.history.push('/')
+      })
+      .catch(error => this.setState({emailError: ' ', passwordError: error.response.data}))
+
       }
 
       render() {
@@ -97,4 +102,4 @@ class Login extends React.Component {
     }
 
 
-    export default connect(state => { return {} }, { authrRequest })(Login)
+    export default connect(state => { return {} }, { authrRequest })(withRouter(Login))

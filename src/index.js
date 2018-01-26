@@ -5,10 +5,12 @@ import theme from './utils/theme'
 import { Provider } from 'react-redux'
 import Register from './routes/Register'
 import Login from './routes/Login'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Forgot from './routes/Forgot'
+import App from './routes/App.js'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
+import PrivateRoute from './shared/PrivateRoute.js'
 
 // Global style
 // eslint-disable-next-line
@@ -38,6 +40,7 @@ ReactDOM.render(
           <Route exact path="/register" component={Register}/>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/forgot_password" component={Forgot}/>
+          <PrivateRoute exact path="/" component={App}/>
         </Switch>
       </Router>
     </ThemeProvider>
