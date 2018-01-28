@@ -47,43 +47,47 @@ class Forgot extends React.Component {
       .then(
         this.setState({emailSuccess: 'It should arrive shortly.'})
       )
-      .catch(
-        error => this.setState({emailError: ' ', passwordError: error.response.data}))
-      }
-
-      render() {
-        return (
-          <div>
-            <PageHeader>
-              <Container>
-                <h1>Reset your password</h1>
-                <p>Oops! It happens. Enter your email address and our robots will send you instructions to reset your password.</p>
-              </Container>
-            </PageHeader>
-            <Container>
-              <Space4>
-                <Space3>
-                  <form onSubmit={this.onSubmit}>
-                    <InputGroup
-                      type='text'
-                      label='Email'
-                      name='email'
-                      value={this.state.email}
-                      error={this.state.emailError}
-                      success={this.state.emailSuccess}
-                      onChange={this.onChange}
-                      onBlur={this.validateEmail}
-                    />
-                    <Button>Submit</Button>
-                  </form>
-                </Space3>
-              </Space4>
-            </Container>
-          </div>
-
-        )
-      }
+      .catch(error => {
+        const response = error.response
+        response ?
+        this.setState({emailError: response.data}) :
+        this.setState({emailError: 'R server is shutdown for the evening. Try again later.'})
+      })
     }
 
+    render() {
+      return (
+        <div>
+          <PageHeader>
+            <Container>
+              <h1>Reset your password</h1>
+              <p>Oops! It happens. Enter your email address and our robots will send you instructions to reset your password.</p>
+            </Container>
+          </PageHeader>
+          <Container>
+            <Space4>
+              <Space3>
+                <form onSubmit={this.onSubmit}>
+                  <InputGroup
+                    type='text'
+                    label='Email'
+                    name='email'
+                    value={this.state.email}
+                    error={this.state.emailError}
+                    success={this.state.emailSuccess}
+                    onChange={this.onChange}
+                    onBlur={this.validateEmail}
+                  />
+                  <Button>Submit</Button>
+                </form>
+              </Space3>
+            </Space4>
+          </Container>
+        </div>
 
-    export default connect(state => { return {} }, { authrRequest })(Forgot)
+      )
+    }
+  }
+
+
+  export default connect(state => { return {} }, { authrRequest })(Forgot)

@@ -6,5 +6,5 @@ export const LOGIN_ENDPOINT    = `http://${WANIP}:8005/api/authr/login_user`
 export const FORGOT_ENDPOINT   = `http://${WANIP}:8005/api/authr/forgot_password`
 
 export function authrRequest(endpoint, userdata) {
-  return dispatch => axios.post(endpoint, userdata)
+  return dispatch => axios.post(endpoint, userdata, {timeout: 2000})
 }

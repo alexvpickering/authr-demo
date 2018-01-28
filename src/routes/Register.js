@@ -78,8 +78,12 @@ class Register extends React.Component {
         localStorage.setItem('authr_jwt', response.data)
         this.props.history.push('/')
       })
-      .catch(error => this.setState({emailError: error.response.data}))
-
+      .catch(error => {
+        const response = error.response
+        response ?
+        this.setState({emailError: response.data}) :
+        this.setState({emailError: ' ', passwordError: ' ', confirmError: 'R server is shutdown for the evening. Try again later.'})
+      })
     }
 
     render() {
